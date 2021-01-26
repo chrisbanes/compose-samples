@@ -17,10 +17,17 @@
 package com.example.compose.jetchat.demo
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -79,7 +86,19 @@ fun Message(
         ) {
             Text(text = message.content)
 
-            AnimatedVisibility(visible = showActions) {
+            AnimatedVisibility(
+                visible = showActions,
+                enter = fadeIn(
+                    animSpec = spring(stiffness = Spring.StiffnessLow)
+                ) + expandVertically(
+                    animSpec = spring(stiffness = Spring.StiffnessLow)
+                ),
+            exit = fadeOut(
+                animSpec = spring(stiffness = Spring.StiffnessLow)
+            ) + shrinkVertically(
+                animSpec = spring(stiffness = Spring.StiffnessLow)
+            ),
+            ) {
                 MessageActions()
             }
         }

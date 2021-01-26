@@ -17,6 +17,8 @@
 package com.example.compose.jetchat.theme
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -76,8 +78,14 @@ fun JetchatTheme(
     val onSecondary = overrideSecondary?.calculateOnColor() ?: baseColors.onSecondary
 
     val colors = baseColors.copy(
-        secondary = animateColorAsState(secondary).value,
-        onSecondary = animateColorAsState(onSecondary).value
+        secondary = animateColorAsState(
+            targetValue = secondary,
+            animationSpec = spring(stiffness = Spring.StiffnessVeryLow)
+        ).value,
+        onSecondary = animateColorAsState(
+            targetValue = onSecondary,
+            animationSpec = spring(stiffness = Spring.StiffnessVeryLow)
+        ).value
     )
 
     MaterialTheme(
